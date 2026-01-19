@@ -1,8 +1,6 @@
 overriding file
 <!-- MEMBUAT METHOD DI CHILD YANG AKAN MENIMPA METHOD DI PARENT -->
-<!-- 
-OVERRIDE = MENIMPA
- -->
+<!-- OVERRIDE = MENIMPA -->
 
 
 <!-- INHERETENCE -->
