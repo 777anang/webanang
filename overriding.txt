@@ -1,0 +1,99 @@
+overriding file
+<!-- MEMBUAT METHOD DI CHILD YANG AKAN MENIMPA METHOD DI PARENT -->
+<!-- 
+OVERRIDE = MENIMPA
+ -->
+
+
+<!-- INHERETENCE -->
+<!-- Menciptakan hirarki antar class (parent - child) -->
+<!-- child - mewarisi properti dari parent (yang visible) -->
+<!-- child - memperluas (extend) fungsionalitas dari parent -->
+
+
+
+
+<?php
+
+
+class Produk
+{
+    public $judul,
+        $penulis, $penerbit, // defaultnya akan null
+        $harga;
+
+
+    // function construct Langsung dijalankan kalau membuat class
+    public function __construct($parJudul = 'judul', $parPenulis = 'default author', $parPenerbit, $parHarga)
+    {
+        $this->judul = $parJudul;
+        $this->penulis = $parPenulis;
+        $this->penerbit = $parPenerbit;
+        $this->harga = $parHarga;
+    }
+
+    public function getLabel()
+    {
+        return "{$this->penulis}, {$this->penerbit}";
+    }
+
+    public function getInfoProduk()
+    {
+        $str = "{$this->judul} | {$this->getLabel()} (Rp. {$this->harga})";
+        return $str;
+    }
+}
+
+
+//  artinya komik bisa memakai semua properti dan method dari produk
+class Komik extends Produk
+{
+    public $jumlahHalaman;
+    public function __construct($parJudul, $parPenulis, $parPenerbit, $parHarga, $parHalaman)
+    {
+        parent::__construct($parJudul, $parPenulis, $parPenerbit, $parHarga);
+        $this->jumlahHalaman = $parHalaman;
+    }
+    // kalau tidak ada properti, method, constructor, maka akan pakai punya Produk
+    public function getInfoProduk()
+    {
+        $str = "Komik :" . parent::getInfoProduk() . " - {$this->jumlahHalaman} halaman.";
+        return $str;
+    }
+}
+
+
+class Game extends Produk
+{
+    public $jumlahJam;
+    public function __construct($parJudul, $parPenulis, $parPenerbit, $parHarga, $parJam)
+    {
+        parent::__construct($parJudul, $parPenulis, $parPenerbit, $parHarga);
+        $this->jumlahJam = $parJam;
+    }
+    // kalau tidak ada properti, method, constructor, maka akan pakai punya Produk
+    public function getInfoProduk()
+    {
+        $str = "Game :" . parent::getInfoProduk() . " - {$this->jumlahJam} jam.";
+        return $str;
+    }
+}
+
+class CetakInfoProduk
+{
+    public function cetak(Produk $produk) // cuma bisa masukin harus instancce dari class 'Produk'
+    {
+        $str =  "{$produk->judul} | {$produk->getLabel()} ($produk->harga )";
+        return $str;
+    }
+}
+
+
+$produk1 = new Komik("Naruto", "masashi", 'airlangga', 30000, 250);
+$produk2 = new Komik("lookism", "kim wo bin", 'korea', 20000, 500);
+$produk3 = new Game("God of war", "EA", 'amerika', 50000, 500);
+// output yang diharapkan
+// Anime : Naruto | masashi, airlangga (30000) - 100 halaman.
+echo $produk1->getInfoProduk();
+echo "<br>";
+echo $produk3->getInfoProduk();
